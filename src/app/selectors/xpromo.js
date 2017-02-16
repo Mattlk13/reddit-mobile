@@ -1,6 +1,6 @@
 import { find, some } from 'lodash';
 
-import { flags as flagConstants, themes } from 'app/constants';
+import { flags as flagConstants, themes, xpromoDisplayTheme } from 'app/constants';
 import features from 'app/featureFlags';
 import getSubreddit from 'lib/getSubredditFromState';
 import getRouteMetaFromState from 'lib/getRouteMetaFromState';
@@ -8,6 +8,7 @@ import { getExperimentData } from 'lib/experiments';
 import { getDevice, IPHONE, ANDROID } from 'lib/getDeviceFromState';
 
 const { NIGHTMODE } = themes;
+const { USUAL, MINIMAL } = xpromoDisplayTheme;
 
 const {
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS,
@@ -23,9 +24,23 @@ const EXPERIMENT_NAMES = {
   [VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL]: 'mweb_xpromo_require_login_android',
 };
 
-export function xpromoIsEnabledOnPage(state) {
+function getRouteActionName(state) {
   const routeMeta = getRouteMetaFromState(state);
   const actionName = routeMeta && routeMeta.name;
+  return actionName;
+}
+
+export function xpromoTheme(state) {
+  switch (getRouteActionName(state)) {
+    case 'comments':
+      return MINIMAL;
+    default: 
+      return USUAL;
+  }
+}
+
+export function xpromoIsEnabledOnPage(state) {
+  const actionName = getRouteActionName(state);
   return actionName === 'index' || (actionName === 'comments' && isDayMode(state)) || (actionName === 'listing' && !isNSFWPage(state));
 }
 
@@ -68,6 +83,8 @@ export function loginRequiredEnabled(state) {
 }
 
 export function shouldShowXPromo(state) {
+  // console.error('>%%%%>', state.smartBanner.showBanner, xpromoIsEnabledOnPage(state), xpromoIsEnabledOnDevice(state), state)
+
   return state.smartBanner.showBanner &&
     xpromoIsEnabledOnPage(state) &&
     xpromoIsEnabledOnDevice(state);

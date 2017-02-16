@@ -103,6 +103,11 @@ export const flags = {
   SHOW_AMP_LINK: 'showAmpLink',
 };
 
+export const xpromoDisplayTheme = {
+  USUAL: 'usual',
+  MINIMAL: 'minimal',
+};
+
 export const themes = {
   NIGHTMODE: 'nightmode',
   DAYMODE: 'daymode',

@@ -13,6 +13,7 @@ class XPromoWrapper extends React.Component {
   };
 
   onScroll = () => {
+    console.error('====>', this.props)
     // For now we will consider scrolling half the viewport
     // "scrolling past" the interstitial.
     // note the referencing of window

@@ -22,8 +22,6 @@ const xPromoSelector = createSelector(
 const NavFrame = props => {
   const { children, requireLogin, showXPromo } = props;
 
-  console.error('>>>>', props)
-
   let belowXPromo = null;
   if (!requireLogin) {
     belowXPromo = (

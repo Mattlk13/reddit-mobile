@@ -9,12 +9,12 @@ import DualPartInterstitialHeader from 'app/components/DualPartInterstitial/Head
 import DualPartInterstitialFooter from 'app/components/DualPartInterstitial/Footer';
 import XPromoWrapper from 'app/components/XPromoWrapper';
 import { navigateToAppStore, promoClicked } from 'app/actions/xpromo';
-
+import { xpromoTheme } from 'app/selectors/xpromo';
 
 export function DualPartInterstitial(props) {
   return (
     <XPromoWrapper>
-      <div className='DualPartInterstitial'>
+      <div className={ `DualPartInterstitial m-${props.theme}` }>
         <div className='DualPartInterstitial__content'>
           <div className='DualPartInterstitial__common'>
             <DualPartInterstitialHeader { ...props } />
@@ -28,7 +28,8 @@ export function DualPartInterstitial(props) {
 
 export const selector = createSelector(
   getDevice,
-  (device) => ({ device }),
+  xpromoTheme,
+  (device, theme) => ({ device, theme }),
 );
 
 const mapDispatchToProps = dispatch => ({
