@@ -6,29 +6,23 @@ import { createSelector } from 'reselect';
 import DualPartInterstitial from 'app/components/DualPartInterstitial';
 import EUCookieNotice from 'app/components/EUCookieNotice';
 import TopNav from 'app/components/TopNav';
-import {
-  shouldShowXPromo,
-  loginRequiredEnabled as loginRequiredXPromoVariant,
-} from 'app/selectors/xpromo';
+import { shouldShowXPromo, loginRequiredEnabled as loginRequiredXPromoVariant } from 'app/selectors/xpromo';
 
+const themeSelector = state => state.theme;
 
 const xPromoSelector = createSelector(
   shouldShowXPromo,
   loginRequiredXPromoVariant,
-  (showXPromo, requireLogin) => {
-    return {
-      showXPromo,
-      requireLogin,
-    };
+  themeSelector,
+  (showXPromo, requireLogin, theme) => {
+    return { showXPromo, requireLogin, theme};
   },
 );
 
 const NavFrame = props => {
-  const {
-    children,
-    requireLogin,
-    showXPromo,
-  } = props;
+  const { children, requireLogin, showXPromo } = props;
+
+  console.error('>>>>', props)
 
   let belowXPromo = null;
   if (!requireLogin) {
@@ -45,8 +39,7 @@ const NavFrame = props => {
 
   return (
     <div className='NavFrame'>
-      { showXPromo ?
-        <DualPartInterstitial>{ children }</DualPartInterstitial> : null }
+      { showXPromo ? <DualPartInterstitial>{ children }</DualPartInterstitial> : null }
       { belowXPromo }
     </div>
   );

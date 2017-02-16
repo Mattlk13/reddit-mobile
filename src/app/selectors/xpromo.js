@@ -1,11 +1,13 @@
 import { find, some } from 'lodash';
 
-import { flags as flagConstants } from 'app/constants';
+import { flags as flagConstants, themes } from 'app/constants';
 import features from 'app/featureFlags';
 import getSubreddit from 'lib/getSubredditFromState';
 import getRouteMetaFromState from 'lib/getRouteMetaFromState';
 import { getExperimentData } from 'lib/experiments';
 import { getDevice, IPHONE, ANDROID } from 'lib/getDeviceFromState';
+
+const { NIGHTMODE } = themes;
 
 const {
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS,
@@ -24,7 +26,7 @@ const EXPERIMENT_NAMES = {
 export function xpromoIsEnabledOnPage(state) {
   const routeMeta = getRouteMetaFromState(state);
   const actionName = routeMeta && routeMeta.name;
-  return actionName === 'index' || (actionName === 'listing' && !isNSFWPage(state));
+  return actionName === 'index' || (actionName === 'comments' && isDayMode(state)) || (actionName === 'listing' && !isNSFWPage(state));
 }
 
 export function xpromoIsEnabledOnDevice(state) {
@@ -47,6 +49,10 @@ function isNSFWPage(state) {
     return subredditInfo.over18;
   }
   return true;
+}
+
+function isDayMode(state) {
+  return (NIGHTMODE !== state.theme)
 }
 
 export function loginRequiredEnabled(state) {
