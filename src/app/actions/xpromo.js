@@ -17,6 +17,8 @@ export const promoClicked = () => ({ type: PROMO_CLICKED });
 
 export const PROMO_SCROLLPAST = 'XPROMO__SCROLLPAST';
 export const promoScrollPast = () => ({ type: PROMO_SCROLLPAST });
+export const PROMO_SCROLLPRES = 'XPROMO__SCROLLPRES';
+export const promoScrollPres = () => ({ type: PROMO_SCROLLPRES });
 
 export const RECORD_SHOWN = 'XPROMO__RECORD_SHOWN';
 export const recordShown = url => ({

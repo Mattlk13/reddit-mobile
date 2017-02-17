@@ -39,6 +39,12 @@ export default function(state=DEFAULT, action={}) {
       });
     }
 
+    case xpromoActions.PROMO_SCROLLPRES: {
+      return merge(state, {
+        scrolledPast: false,
+      });
+    }
+
     case xpromoActions.LOGIN_REQUIRED: {
       return merge(state, {
         loginRequired: true,

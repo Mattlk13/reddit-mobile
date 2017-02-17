@@ -75,8 +75,6 @@ class DualPartInterstitialFooter extends React.Component {
       requireLogin,
     } = this.props;
 
-    console.error('===?', this.props)
-
     let dismissal;
 
     if (requireLogin) {

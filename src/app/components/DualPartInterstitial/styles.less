@@ -79,9 +79,13 @@
 
 .DualPartInterstitial.m-minimal {
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
   z-index: 30;
+  opacity: 1;
+  .transition(all, 0.5s);
+
+  &.fadeOut { opacity: 0; }
 
   .DualPartInterstitial {
     &__content{

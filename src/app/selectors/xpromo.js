@@ -38,6 +38,9 @@ export function xpromoTheme(state) {
       return USUAL;
   }
 }
+export function xpromoThemeIsUsual(state) {
+  return state.xpromoTheme === USUAL;
+}
 
 export function xpromoIsEnabledOnPage(state) {
   const actionName = getRouteActionName(state);
@@ -82,9 +85,11 @@ export function loginRequiredEnabled(state) {
   );
 }
 
-export function shouldShowXPromo(state) {
-  // console.error('>%%%%>', state.smartBanner.showBanner, xpromoIsEnabledOnPage(state), xpromoIsEnabledOnDevice(state), state)
+export function scrollPastState(state) {
+  return state.smartBanner.scrolledPast;
+}
 
+export function shouldShowXPromo(state) {
   return state.smartBanner.showBanner &&
     xpromoIsEnabledOnPage(state) &&
     xpromoIsEnabledOnDevice(state);
