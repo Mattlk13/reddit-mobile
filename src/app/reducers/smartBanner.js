@@ -39,7 +39,7 @@ export default function(state=DEFAULT, action={}) {
       });
     }
 
-    case xpromoActions.PROMO_SCROLLPRES: {
+    case xpromoActions.PROMO_SCROLLUP: {
       return merge(state, {
         scrolledPast: false,
       });

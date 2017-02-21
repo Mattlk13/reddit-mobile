@@ -30,7 +30,7 @@ class XPromoWrapper extends React.Component {
     // xpromo fade-in action, if user will scroll
     // window up (only for "minimal" xpromo theme)
     if ( !halfViewport && alreadyScrolledPast ){
-      dispatch(xpromoActions.promoScrollPres());
+      dispatch(xpromoActions.promoScrollUp());
     }
     // remove scroll events for usual xpromo theme 
     // (no needs to listen window up scrolling)

@@ -64,10 +64,10 @@ createTest({ reducers: { smartBanner }, routes }, ({ getStore, expect }) => {
       });
     });
 
-    describe('SCROLLPRES', () => {
+    describe('SCROLLUP', () => {
       it('should change the store status after viewport has been scrolled up', () => {
         const { store } = getStore({ smartBanner: DEFAULT });
-        store.dispatch(xpromoActions.promoScrollPres());
+        store.dispatch(xpromoActions.promoScrollUp());
         const { smartBanner } = store.getState();
         expect(smartBanner.scrolledPast).to.eql(false);
       });
