@@ -3,7 +3,6 @@ import omitBy from 'lodash/omitBy';
 import isNull from 'lodash/isNull';
 import sha1 from 'crypto-js/sha1';
 import url from 'url';
-
 import { flags as flagConstants } from 'app/constants';
 import getSubreddit from 'lib/getSubredditFromState';
 import getRouteMetaFromState from 'lib/getRouteMetaFromState';
@@ -33,7 +32,11 @@ const {
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID,
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL,
-  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL,
+
   VARIANT_TITLE_EXPANDO,
   VARIANT_MIXED_VIEW,
   SHOW_AMP_LINK,
@@ -189,21 +192,52 @@ const config = {
       ] },
     ],
   },
-  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL]: {
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT]: {
     and: [
-      { allowedDevices: [IPHONE, ANDROID] },
+      { allowedDevices: [IPHONE] },
       { allowNSFW: false },
       { allowedPages: ['comments'] },
       { or: [
         { url: 'xpromointerstitialcomments' },
-        { variant: 'mweb_xpromo_interstitial_comments:control_1' },
-        { variant: 'mweb_xpromo_interstitial_comments:control_2' },
-        { variant: 'mweb_xpromo_interstitial_comments:treatment_1' },
+        { variant: 'mweb_xpromo_interstitial_comments_ios:treatment' },
       ] },
     ],
   },
-
-
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT]: {
+    and: [
+      { allowedDevices: [ANDROID] },
+      { allowNSFW: false },
+      { allowedPages: ['comments'] },
+      { or: [
+        { url: 'xpromointerstitialcomments' },
+        { variant: 'mweb_xpromo_interstitial_comments_android:treatment' },
+      ] },
+    ],
+  },
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL]: {
+    and: [
+      { allowedDevices: [IPHONE] },
+      { allowNSFW: false },
+      { allowedPages: ['comments'] },
+      { or: [
+        { url: 'xpromointerstitialcommentsioscontrol' },
+        { variant: 'mweb_xpromo_interstitial_comments_ios:control_1' },
+        { variant: 'mweb_xpromo_interstitial_comments_ios:control_2' },
+      ] },
+    ],
+  },
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL]: {
+    and: [
+      { allowedDevices: [ANDROID] },
+      { allowNSFW: false },
+      { allowedPages: ['comments'] },
+      { or: [
+        { url: 'xpromointerstitialcommentsandroidcontrol' },
+        { variant: 'mweb_xpromo_interstitial_comments_android:control_1' },
+        { variant: 'mweb_xpromo_interstitial_comments_android:control_2' },
+      ] },
+    ],
+  },
   [VARIANT_TITLE_EXPANDO]: {
     and: [
       { compact: true},

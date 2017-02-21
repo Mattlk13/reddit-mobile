@@ -19,6 +19,7 @@ import { shouldNotShowBanner } from 'lib/smartBannerState';
 export const XPROMO_VIEW = 'cs.xpromo_view';
 export const XPROMO_INELIGIBLE = 'cs.xpromo_ineligible';
 export const XPROMO_DISMISS = 'cs.xpromo_dismiss';
+export const XPROMO_SCROLLUP = 'cs.xpromo_scrollup';
 export const XPROMO_SCROLLPAST = 'cs.xpromo_scrollpast';
 export const XPROMO_APP_STORE_VISIT = 'cs.xpromo_app_store_visit';
 

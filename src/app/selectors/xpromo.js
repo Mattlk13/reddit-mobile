@@ -7,7 +7,7 @@ import getRouteMetaFromState from 'lib/getRouteMetaFromState';
 import { getExperimentData } from 'lib/experiments';
 import { getDevice, IPHONE, ANDROID } from 'lib/getDeviceFromState';
 
-const { NIGHTMODE } = themes;
+const { DAYMODE } = themes;
 const { USUAL, MINIMAL } = xpromoDisplayTheme;
 
 const {
@@ -15,7 +15,11 @@ const {
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID,
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL,
-  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL,
+
 } = flagConstants;
 
 const EXPERIMENT_FULL = [
@@ -23,7 +27,10 @@ const EXPERIMENT_FULL = [
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID,
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL,
-  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL,
 ];
 
 const EXPERIMENT_MOBILE = [
@@ -36,7 +43,10 @@ const EXPERIMENT_NAMES = {
   [VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID]: 'mweb_xpromo_require_login_android',
   [VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL]: 'mweb_xpromo_require_login_ios',
   [VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL]: 'mweb_xpromo_require_login_android',
-  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL]: 'mweb_xpromo_interstitial_comments',
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT]: 'mweb_xpromo_interstitial_comments_ios_treatment',
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT]: 'mweb_xpromo_interstitial_comments_android_treatment',
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL]: 'mweb_xpromo_interstitial_comments_ios_control',
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL]: 'mweb_xpromo_interstitial_comments_android_control',
 };
 
 function getRouteActionName(state) {
@@ -61,7 +71,7 @@ function isNSFWPage(state) {
 }
 
 function isDayMode(state) {
-  return (NIGHTMODE !== state.theme);
+  return (DAYMODE === state.theme);
 }
 
 function loginExperimentName(state) {
@@ -87,8 +97,18 @@ export function xpromoTheme(state) {
       return USUAL;
   }
 }
+
 export function xpromoThemeIsUsual(state) {
-  return state.xpromoTheme === USUAL;
+  return xpromoTheme(state) === USUAL;
+}
+
+export function xpromoIsPastExperiment(state) {
+  switch (xpromoTheme(state)) {
+    case MINIMAL:
+      return isPartOfXPromoExperiment(state);
+    default: 
+      return true;
+  }
 }
 
 // @TODO: this should be controlled 
@@ -108,20 +128,15 @@ export function xpromoIsEnabledOnDevice(state) {
   return (!!device) && [ANDROID, IPHONE].includes(device);
 }
 
-export function xpromoIsPastExperiment(state) {
-  switch (xpromoTheme(state)) {
-    case MINIMAL:
-      return isPartOfXPromoExperiment(state);
-    default: 
-      return true;
-  }
-}
-
 export function loginRequiredEnabled(state) {
   const featureContext = features.withContext({ state });
+  const isExperimentEnabled = some(EXPERIMENT_MOBILE, feature => {
+    return featureContext.enabled(feature);
+  });
   return (
-    shouldShowXPromo(state) && state.user.loggedOut &&
-    some(EXPERIMENT_MOBILE, feature => featureContext.enabled(feature))
+    shouldShowXPromo(state) && 
+    state.user.loggedOut &&
+    isExperimentEnabled
   );
 }
 

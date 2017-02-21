@@ -12,15 +12,12 @@ import {
   loginRequiredEnabled as loginRequiredXPromoVariant, 
 } from 'app/selectors/xpromo';
 
-const themeSelector = state => state.theme;
-
 const xPromoSelector = createSelector(
   shouldShowXPromo,
   xpromoIsPastExperiment,
   loginRequiredXPromoVariant,
-  themeSelector,
-  (showXPromo, isExperimentPast, requireLogin, theme) => {
-    return { showXPromo, isExperimentPast, requireLogin, theme};
+  (showXPromo, isExperimentPast, requireLogin) => {
+    return { showXPromo, isExperimentPast, requireLogin};
   },
 );
 

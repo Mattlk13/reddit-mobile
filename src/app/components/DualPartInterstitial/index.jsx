@@ -9,7 +9,7 @@ import DualPartInterstitialHeader from 'app/components/DualPartInterstitial/Head
 import DualPartInterstitialFooter from 'app/components/DualPartInterstitial/Footer';
 import XPromoWrapper from 'app/components/XPromoWrapper';
 import { navigateToAppStore, promoClicked } from 'app/actions/xpromo';
-import { xpromoTheme , scrollPastState} from 'app/selectors/xpromo';
+import { xpromoTheme, scrollPastState} from 'app/selectors/xpromo';
 
 export function DualPartInterstitial(props) {
   const xpromoDisplay = props.scrollPast ? 'fadeOut' : '';
