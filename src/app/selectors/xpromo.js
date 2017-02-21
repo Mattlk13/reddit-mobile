@@ -91,9 +91,13 @@ export function xpromoThemeIsUsual(state) {
   return state.xpromoTheme === USUAL;
 }
 
+// @TODO: this should be controlled 
+// by FeatureFlags.js config only
 export function xpromoIsEnabledOnPage(state) {
   const actionName = getRouteActionName(state);
-  return actionName === 'index' || (actionName === 'comments' && isDayMode(state)) || (actionName === 'listing' && !isNSFWPage(state));
+  return actionName === 'index' 
+    || (actionName === 'comments' && isDayMode(state)) 
+    || (actionName === 'listing' && !isNSFWPage(state));
 }
 
 export function xpromoIsEnabledOnDevice(state) {
