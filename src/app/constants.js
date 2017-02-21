@@ -98,6 +98,7 @@ export const flags = {
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID: 'experimentXPromoLoginRequiredAndroid',
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL: 'experimentXPromoLoginRequiredIOSControl',
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL: 'experimentXPromoLoginRequiredAndroidControl',
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL: 'experimentXPromoInterstitialCommentsControl',
   VARIANT_TITLE_EXPANDO: 'experimentTitleExpando',
   VARIANT_MIXED_VIEW: 'experimentMixedView',
   SHOW_AMP_LINK: 'showAmpLink',

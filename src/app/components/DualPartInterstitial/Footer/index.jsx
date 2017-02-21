@@ -115,9 +115,14 @@ class DualPartInterstitialFooter extends React.Component {
 }
 
 function createNativeAppLink(state, linkType) {
-  let payload = { utm_source: 'xpromo', utm_content: linkType };
+  let payload = { 
+    utm_source: 'xpromo', 
+    utm_content: linkType 
+  };
+
   if (isPartOfXPromoExperiment(state)) {
     let experimentData = {};
+
     if (currentExperimentData(state)) {
       const { experiment_name, variant } = currentExperimentData(state);
       experimentData = {
@@ -130,6 +135,7 @@ function createNativeAppLink(state, linkType) {
       ...experimentData,
       utm_medium: 'experiment',
     };
+
   } else {
     payload = { ...payload, utm_medium: 'interstitial' };
   }

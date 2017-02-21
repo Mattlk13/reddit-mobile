@@ -31,6 +31,7 @@ const {
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID,
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL,
   VARIANT_TITLE_EXPANDO,
   VARIANT_MIXED_VIEW,
   SHOW_AMP_LINK,
@@ -186,6 +187,21 @@ const config = {
       ] },
     ],
   },
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL]: {
+    and: [
+      { allowedDevices: [IPHONE, ANDROID] },
+      { allowNSFW: false },
+      { allowedPages: ['comments'] },
+      { or: [
+        { url: 'xpromointerstitialcomments' },
+        { variant: 'mweb_xpromo_interstitial_comments:control_1' },
+        { variant: 'mweb_xpromo_interstitial_comments:control_2' },
+        { variant: 'mweb_xpromo_interstitial_comments:treatment_1' },
+      ] },
+    ],
+  },
+
+
   [VARIANT_TITLE_EXPANDO]: {
     and: [
       { compact: true},
