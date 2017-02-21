@@ -5,9 +5,7 @@ import { Anchor } from '@r/platform/components';
 import { short } from 'lib/formatDifference';
 import mobilify from 'lib/mobilify';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
-
-import { models } from '@r/api-client';
-const { PostModel } = models;
+import PostModel from 'apiClient/models/PostModel';
 
 import {
   isPostNSFW,
@@ -16,7 +14,7 @@ import {
 } from '../postUtils';
 
 import OutboundLink from 'app/components/OutboundLink';
-import { ApprovalStatusBanner } from 'app/components/ApprovalStatusBanner';
+import { ModalBanner } from 'app/components/ModalBanner';
 
 const T = React.PropTypes;
 
@@ -295,7 +293,7 @@ function renderPostDescriptor(
               isPromotedUserPost ? promotedUserPostDescriptor : normalPostDescriptor
             }
           />
-          
+
         </div>
       </div>
       <div className='PostHeader__metadata'>
@@ -379,10 +377,10 @@ function renderPostTitleLink(post, showLinksInNewTab, onElementClick,
   const titleLinkClass = `PostHeader__post-title-line ${post.visited ? 'm-visited' : ''}`;
   const target = linkExternally && showLinksInNewTab ? '_blank' : null;
 
-  const props = { 
+  const props = {
     className: titleLinkClass,
     href: url,
-    target, 
+    target,
   };
 
   if (linkExternally) {
@@ -395,12 +393,12 @@ function renderPostTitleLink(post, showLinksInNewTab, onElementClick,
   }
 
   const anchorProps = {
-    ...props, 
+    ...props,
     onClick: e => {
       if (titleOpensExpando) {
         e.preventDefault();
         const clickTarget = 'title';
-        onTapExpand(clickTarget); 
+        onTapExpand(clickTarget);
       }
 
       onElementClick();
@@ -447,10 +445,10 @@ export default function PostHeader(props) {
   return (
     <header className={ `PostHeader ${sizeClass} ${thumbnailClass}` }>
       { single && isSubredditModerator
-        ? <ApprovalStatusBanner
-          status={ approvalStatus }
-          statusBy={ statusBy }
-          pageName={ 'postHeader' }
+        ? <ModalBanner
+            status={ approvalStatus }
+            statusBy={ statusBy }
+            pageName={ 'postHeader' }
           />
         : null
       }

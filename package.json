@@ -11,6 +11,7 @@
     "watch": "npm run fonts && NODE_ENV=development blueprints -w",
     "dev-build": "NODE_ENV=development blueprints",
     "dev-server": "NODE_ENV=development nodemon ./bin/Server.js",
+    "analyze": "ANALYZE_BUILD=true npm run build",
     "lint": "eslint src --ext .js,.jsx",
     "lint-errors-only": "eslint src --ext .js,.jsx --quiet",
     "lint-fixup": "eslint src --ext .js,.jsx --fix",
@@ -19,18 +20,17 @@
     "test:watch": "npm run test -- -w"
   },
   "dependencies": {
-    "@r/api-client": "3.36.0",
     "@r/build": "~0.14.0",
     "@r/flags": "^1.5.0",
     "@r/middleware": "~0.8.1",
     "@r/platform": "~0.17.1",
     "@r/private": "0.4.0",
-    "@r/redux-state-archiver": "~0.0.5",
     "@r/widgets": "~0.2.2",
     "Base64": "1.0.0",
     "autoprefixer": "6.3.6",
     "babel-polyfill": "^6.7.4",
     "cluster": "^0.7.7",
+    "crypto-js": "3.1.8",
     "event-tracker": "git://github.com/reddit/event-tracker.git#28bc2dd9ce3b80540fdf189e1b003f8264cd0d08",
     "js-cookie": "^2.1.1",
     "json-stable-stringify": "^1.0.1",
@@ -49,7 +49,6 @@
     "react-redux": "4.4.5",
     "redux": "3.5.2",
     "reselect": "2.5.1",
-    "sha1": "^1.1.1",
     "source-map-support": "^0.4.0",
     "statsd-client": "^0.2.2",
     "superagent": "1.8.3"
@@ -62,6 +61,7 @@
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-react": "^5.1.1",
     "mocha": "2.4.5",
-    "sinon-chai": "2.8.0"
+    "sinon-chai": "2.8.0",
+    "webpack-bundle-analyzer": "^2.2.1"
   }
 }

@@ -2,9 +2,7 @@ import './styles.less';
 import React from 'react';
 import URL from 'url';
 
-import { models } from '@r/api-client';
-const { PostModel } = models;
-
+import PostModel from 'apiClient/models/PostModel';
 import mobilify from 'lib/mobilify';
 import gifToHTML5Sources, { posterForHrefIfGiphyCat } from 'lib/gifToHTML5Sources';
 
@@ -123,7 +121,7 @@ function buildSelfTextContent(props) {
 
   if (!post.selfTextHTML) { return; }
 
-  const mobileSelfText = mobilify(post.expandedContent);
+  const mobileSelfText = mobilify(post.selfTextHTML);
   return (
     <RedditLinkHijacker>
       <div

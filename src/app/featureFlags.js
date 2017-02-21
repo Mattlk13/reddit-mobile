@@ -1,16 +1,18 @@
 import Flags from '@r/flags';
 import omitBy from 'lodash/omitBy';
 import isNull from 'lodash/isNull';
-import sha1 from 'sha1';
+import sha1 from 'crypto-js/sha1';
+import url from 'url';
 
 import { flags as flagConstants } from 'app/constants';
 import getSubreddit from 'lib/getSubredditFromState';
 import getRouteMetaFromState from 'lib/getRouteMetaFromState';
 import getContentId from 'lib/getContentIdFromState';
-import url from 'url';
 import { extractUser, getExperimentData } from 'lib/experiments';
 import { getEventTracker } from 'lib/eventTracker';
+import { getBasePayload } from 'lib/eventUtils';
 import { getDevice, IPHONE, IOS_DEVICES, ANDROID } from 'lib/getDeviceFromState';
+
 
 const {
   BETA,
@@ -282,7 +284,6 @@ flags.addRule('variant', function (name) {
   const experimentData = getExperimentData(this.state, experiment_name);
   if (experimentData) {
     const { variant, experiment_id, owner } = experimentData;
-    const { user } = this.state;
 
     // we only want to bucket the user once per session for any given experiment.
     // to accomplish this, we're going to use the fact that featureFlags is a
@@ -293,13 +294,10 @@ flags.addRule('variant', function (name) {
 
       const eventTracker = getEventTracker();
       const payload = {
+        ...getBasePayload(this.state),
         experiment_id,
         experiment_name,
         variant,
-        user_id: !user.loggedOut ? parseInt(user.id, 36) : null,
-        user_name: !user.loggedOut ? user.name : null,
-        loid: user.loggedOut ? this.state.loid.loid : null,
-        loidcreated: user.loggedOut ? this.state.loid.loidCreated : null,
         owner: owner || null,
       };
 
@@ -381,7 +379,7 @@ flags.addRule('notOptedOut', function (flag) {
 flags.addRule('pageBucketPercent', function(config) {
   const { seed, percentage } = config;
   const contentId = getContentId(this.state);
-  const hashed = sha1(`${seed}${contentId}`);
+  const hashed = sha1(`${seed}${contentId}`).toString();
 
   // hashed is a 160-bit number expressed as a hex string.
   // We want to find (hashed % 1000), so we can map the hash to bucket sizes

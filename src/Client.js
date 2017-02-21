@@ -5,11 +5,9 @@ import React from 'react';
 import Raven from 'raven-js';
 import Client from '@r/platform/Client';
 import * as platformActions from '@r/platform/actions';
-import { models } from '@r/api-client';
 import isEmpty from 'lodash/isEmpty';
 
-import { isLocalStorageAvailable } from '@r/redux-state-archiver';
-
+import localStorageAvailable from 'lib/localStorageAvailable';
 import App from 'app';
 import config from 'config';
 import errorLog from 'lib/errorLog';
@@ -21,6 +19,7 @@ import ravenMiddleware from 'app/reduxMiddleware/raven';
 import { sendTimings, onHandlerCompleteTimings } from 'lib/timing';
 import Session from 'app/models/Session';
 import * as xpromoActions from 'app/actions/xpromo';
+import Preferences from 'apiClient/models/Preferences';
 
 Raven
   .config(process.env.SENTRY_CLIENT_PUBLIC_URL, {
@@ -37,7 +36,7 @@ let isShell;
 window.onload = () => {
   const endMount = Date.now();
   sendTimings(beginMount, endMount, isShell);
-  initGoogleTagManager(client.getState().platform.currentPage.urlParams.subredditName);
+  initGoogleTagManager();
 };
 
 const ERROR_ENDPOINTS = {
@@ -111,16 +110,16 @@ const client = Client({
       window.session = data.session;
     }
 
-    data.preferences = models.Preferences.fromJSON(data.preferences);
+    data.preferences = Preferences.fromJSON(data.preferences);
 
     data.meta.env = 'CLIENT';
 
     // Pull some defaults from localStorage (if available)
-    if (isLocalStorageAvailable()) {
+    if (localStorageAvailable()) {
       try {
         const collapsedComments = window.localStorage.collapsedComments;
         if (collapsedComments !== undefined) {
-          data.collapsedComments = JSON.parse(collapsedComments);
+          data.comments.collapsed = JSON.parse(collapsedComments);
         }
       } catch (e) { console.warn(e); }
 

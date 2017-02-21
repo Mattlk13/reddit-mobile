@@ -43,6 +43,14 @@
     margin-left: -(@max-width / 2);
     max-width: @max-width;
   }
+
+  .DropdownClose {
+    float: right;
+
+    .icon-x {
+      font-size: @icon-size-medium-large;
+    }
+  }
 }
 
 .DropdownRow,
@@ -117,6 +125,7 @@
     }
 
     &.icon-bar-chart,
+    &.icon-rising,
     &.icon-hot,
     &.icon-op {
       font-size: 21px;

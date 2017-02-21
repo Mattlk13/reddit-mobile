@@ -2,17 +2,18 @@ import './styles.less';
 import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { endpoints, models } from '@r/api-client';
+
+import { POST, COMMENT } from 'apiClient/models/thingTypes';
+import Modtools from 'apiClient/apis/ModTools';
+
 import { Modal } from '@r/widgets/modal';
-import { ApprovalStatusBanner } from 'app/components/ApprovalStatusBanner';
+import { ModalBanner } from 'app/components/ModalBanner';
 import { DropdownRow } from 'app/components/Dropdown';
 import modelFromThingId from 'app/reducers/helpers/modelFromThingId';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
 import * as modActions from 'app/actions/modTools';
 
-const { Modtools } = endpoints;
 const DISTINGUISH_TYPES = Modtools.DISTINGUISH_TYPES;
-const { ModelTypes } = models;
 const T = React.PropTypes;
 
 export class ModeratorModal extends React.Component {
@@ -30,9 +31,9 @@ export class ModeratorModal extends React.Component {
 
   render() {
     let canSticky = false;
-    if (this.props.targetType === ModelTypes.POST) {
+    if (this.props.targetType === POST) {
       canSticky = true;
-    } else if (this.props.targetType === ModelTypes.COMMENT) {
+    } else if (this.props.targetType === COMMENT) {
       const { isMine, target } = this.props;
       canSticky = isMine && target.parentId === target.linkId;
     }
@@ -43,20 +44,26 @@ export class ModeratorModal extends React.Component {
           id={ this.props.modModalId }
           className='DropdownModal ModeratorModal'
         >
-          <ApprovalStatusBanner
-            status={ getApprovalStatus(this.props.isApproved,
-                                       this.props.isRemoved,
-                                       this.props.isSpam,) }
-            statusBy={ getStatusBy(this.props.isApproved,
-                                   this.props.isRemoved,
-                                   this.props.isSpam,
-                                   this.props.removedBy,
-                                   this.props.approvedBy,) }
-            pageName={ 'moderatorModal' }
-          />
+          <div className='DropdownClose'>
+            <DropdownRow
+              icon='x'
+              onClick={ this.props.onClick }
+            />
+          </div>
           <div onClick={ this.props.onClick }>
+            <ModalBanner
+              status={ getApprovalStatus(this.props.isApproved,
+                                         this.props.isRemoved,
+                                         this.props.isSpam,) }
+              statusBy={ getStatusBy(this.props.isApproved,
+                                     this.props.isRemoved,
+                                     this.props.isSpam,
+                                     this.props.removedBy,
+                                     this.props.approvedBy,) }
+              pageName={ 'moderatorModal' }
+            />
             <div className='ModeratorModalRowWrapper'>
-              { this.props.targetType === ModelTypes.POST
+              { this.props.targetType === POST
                 ? [
                   <DropdownRow
                     icon='nsfw'
@@ -144,7 +151,7 @@ ModeratorModal.propTypes = {
   distinguishType: T.string,
   isMine: T.bool,
   target: T.object,
-  targetType: T.oneOf([ModelTypes.COMMENT, ModelTypes.POST]).isRequired,
+  targetType: T.oneOf([COMMENT, POST]).isRequired,
 };
 
 ModeratorModal.defaultProps = {
@@ -165,7 +172,7 @@ const mapDispatchToProps = (dispatch, { id, isSticky, targetType }) => ({
   toggleSpoiler: () => dispatch(modActions.toggleSpoiler(id)),
   onDistinguish: (distinguishType) => dispatch(modActions.distinguish(id, distinguishType)),
   onToggleSticky: () => {
-    if (targetType === ModelTypes.POST) {
+    if (targetType === POST) {
       dispatch(modActions.setStickyPost(id, !isSticky));
     } else {
       dispatch(modActions.setStickyComment(id, !isSticky));

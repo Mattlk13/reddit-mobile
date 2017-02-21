@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { models } from '@r/api-client';
+import { POST } from 'apiClient/models/thingTypes';
 
 import ModeratorModal from 'app/components/ModeratorModal';
 import {
@@ -9,7 +9,6 @@ import {
   DropdownLinkRow,
 } from 'app/components/Dropdown';
 
-const { ModelTypes } = models;
 const T = React.PropTypes;
 
 export default function PostDropdown(props) {
@@ -55,14 +54,14 @@ export default function PostDropdown(props) {
         removedBy={ removedBy }
         isMine={ isMine }
         distinguishType={ distinguishType }
-        targetType={ ModelTypes.POST }
+        targetType={ POST }
       >
       </ModeratorModal>
     );
   }
 
   return (
-    <DropdownModal id={ id } onClick={ onToggleModal }>
+    <DropdownModal id={ id } onClick={ onToggleModal } showX={ true }>
       { canModify ?
         <DropdownRow
           icon='post_edit'

@@ -1,7 +1,8 @@
-import { endpoints, errors } from '@r/api-client';
-const { CommentsEndpoint, PostsEndpoint } = endpoints;
-const { ResponseError } = errors;
-import { some } from 'lodash/collection';
+import some from 'lodash/some';
+
+import CommentsEndpoint from 'apiClient/apis/CommentsEndpoint';
+import PostsEndpoint from 'apiClient/apis/PostsEndpoint';
+import ResponseError from 'apiClient/errors/ResponseError';
 
 import { apiOptionsFromState } from 'lib/apiOptionsFromState';
 import getSubreddit from 'lib/getSubredditFromState';
@@ -20,22 +21,28 @@ const {
 export const FETCHING_COMMENTS_PAGE = 'FETCHING_COMMENTS_PAGE';
 export const fetching = (commentsPageId, commentsPageParams) => ({
   type: FETCHING_COMMENTS_PAGE,
-  commentsPageId,
-  commentsPageParams,
+  payload: {
+    commentsPageId,
+    commentsPageParams,
+  },
 });
 
 export const RECEIVED_COMMENTS_PAGE = 'RECEIVED_COMMENTS_PAGE';
 export const received = (commentsPageId, apiResponse) => ({
   type: RECEIVED_COMMENTS_PAGE,
-  commentsPageId,
-  apiResponse,
+  payload: {
+    pageId: commentsPageId,
+    ...apiResponse,
+  },
 });
 
 export const FAILED = 'FAILED_COMMENTS_PAGE';
 export const failed = (commentsPageId, error) => ({
   type: FAILED,
-  commentsPageId,
-  error,
+  payload: {
+    commentsPageId,
+    error,
+  },
 });
 
 export const VISITED_COMMENTS_PAGE = 'VISITED_COMMENTS_PAGE';
