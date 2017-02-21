@@ -24,12 +24,12 @@ const EXPERIMENT_FULL = [
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL,
   VARIANT_XPROMO_INTERSTITIAL_COMMENTS_CONTROL,
-]
+];
 
 const EXPERIMENT_MOBILE = [
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID,
-]
+];
 
 const EXPERIMENT_NAMES = {
   [VARIANT_XPROMO_LOGIN_REQUIRED_IOS]: 'mweb_xpromo_require_login_ios',
@@ -61,14 +61,14 @@ function isNSFWPage(state) {
 }
 
 function isDayMode(state) {
-  return (NIGHTMODE !== state.theme)
+  return (NIGHTMODE !== state.theme);
 }
 
 function loginExperimentName(state) {
   if (!shouldShowXPromo(state)) {
     return null;
   }
-  return xpromoIsPartOfExperiment(state)
+  return xpromoIsPartOfExperiment(state);
 }
 
 function xpromoIsPartOfExperiment(state) {
@@ -109,7 +109,7 @@ export function xpromoIsEnabledOnDevice(state) {
 }
 
 export function xpromoIsPastExperiment(state) {
-    switch (xpromoTheme(state)) {
+  switch (xpromoTheme(state)) {
     case MINIMAL:
       return isPartOfXPromoExperiment(state);
     default: 
@@ -132,7 +132,7 @@ export function scrollPastState(state) {
 export function shouldShowXPromo(state) {
   return state.smartBanner.showBanner &&
     xpromoIsEnabledOnPage(state) &&
-    xpromoIsEnabledOnDevice(state) 
+    xpromoIsEnabledOnDevice(state); 
 }
 
 export function interstitialType(state) {

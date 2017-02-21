@@ -144,8 +144,8 @@ export default class PostFooter extends React.Component {
           </ModalTarget>
           { isSubredditModerator
             ? (<ModalTarget
-                id={ modModalId }
-              >
+              id={ modModalId }
+               >
                 <div className='PostFooter__dropdown-button PostFooter__hit-area icon icon-mod'/>
               </ModalTarget>)
             : null

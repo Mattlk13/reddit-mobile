@@ -128,18 +128,18 @@ const fetchRecommendedSubreddits = (state, dispatch, subredditName) => {
 */
 
 const fetchSimilarPosts = (state, dispatch, post) => {
-  let experimentId = 105;
+  const experimentId = 105;
   dispatch(similarPostsActions.fetchSimilarPosts(post, experimentId));
 };
 
 const fetchRecommendedSubredditsByPost = (state, dispatch, post) => {
-  let experimentId = 105;
+  const experimentId = 105;
   dispatch(subredditsByPostActions.fetchSubredditsByPost(post, experimentId));
 };
 
 const fetchRecommendedSubredditsToPostsByPost = (state, dispatch, post) => {
   const feature = features.withContext({ state });
-  let experimentId = 105;
+  const experimentId = 105;
   let time = '';
   let sort = '';
   if (feature.enabled(VARIANT_RECOMMENDED_BY_POST_TOP_ALL)) {

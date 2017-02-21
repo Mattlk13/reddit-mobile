@@ -102,7 +102,8 @@ class DualPartInterstitialFooter extends React.Component {
           </div>
           <List />
           <div className='DualPartInterstitialFooter__button'
-               onClick={ navigator(nativeInterstitialLink) }>
+            onClick={ navigator(nativeInterstitialLink) }
+          >
             Continue
           </div>
           <div className='DualPartInterstitialFooter__dismissal'>
@@ -117,7 +118,7 @@ class DualPartInterstitialFooter extends React.Component {
 function createNativeAppLink(state, linkType) {
   let payload = { 
     utm_source: 'xpromo', 
-    utm_content: linkType 
+    utm_content: linkType, 
   };
 
   if (isPartOfXPromoExperiment(state)) {

@@ -9,7 +9,7 @@ import TopNav from 'app/components/TopNav';
 import { 
   shouldShowXPromo, 
   xpromoIsPastExperiment,
-  loginRequiredEnabled as loginRequiredXPromoVariant 
+  loginRequiredEnabled as loginRequiredXPromoVariant, 
 } from 'app/selectors/xpromo';
 
 const themeSelector = state => state.theme;
@@ -40,11 +40,11 @@ const NavFrame = props => {
     );
   } 
 
-  let isShow = !!(showXPromo && isExperimentPast);
+  const isShow = !!(showXPromo && isExperimentPast);
 
   return (
     <div className='NavFrame'>
-      { isShow ? ( <DualPartInterstitial>{ children }</DualPartInterstitial> ) : null }
+      { isShow ? (<DualPartInterstitial>{ children }</DualPartInterstitial>) : null }
       { belowXPromo }
     </div>
   );

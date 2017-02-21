@@ -22,19 +22,19 @@ class XPromoWrapper extends React.Component {
     // should appears only once on scroll down about the half viewport.
     // "scrollPast" state is also used for 
     // toggling xpromo fade-in/fade-out actions
-    if ( halfViewport && !alreadyScrolledPast ) {
+    if (halfViewport && !alreadyScrolledPast) {
       dispatch(xpromoActions.trackXPromoEvent(XPROMO_SCROLLPAST));
       dispatch(xpromoActions.promoScrollPast());
     }
     // should appears only once on scroll up about the half viewport.
     // xpromo fade-in action, if user will scroll
     // window up (only for "minimal" xpromo theme)
-    if ( !halfViewport && alreadyScrolledPast ){
+    if (!halfViewport && alreadyScrolledPast) {
       dispatch(xpromoActions.promoScrollUp());
     }
     // remove scroll events for usual xpromo theme 
     // (no needs to listen window up scrolling)
-    if ( alreadyScrolledPast && xpromoThemeIsUsual(this.props) ) {
+    if (alreadyScrolledPast && xpromoThemeIsUsual(this.props)) {
       window.removeEventListener('scroll', this.onScroll);
     }
   }
@@ -58,7 +58,7 @@ class XPromoWrapper extends React.Component {
 const selector = createStructuredSelector({
   currentUrl: state => state.platform.currentPage.url,
   alreadyScrolledPast: state => state.smartBanner.scrolledPast,
-  xpromoTheme
+  xpromoTheme,
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
