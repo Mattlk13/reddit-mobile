@@ -95,6 +95,7 @@ window.onunhandledrejection = rejection => {
 };
 
 // start the app now
+/* eslint-disable no-undef*/
 const client = Client({
   routes,
   reducers: reducers(___r.platform.currentPage),
@@ -156,6 +157,7 @@ const client = Client({
   debug: (process.env.NODE_ENV || 'production') !== 'production',
   onHandlerComplete: onHandlerCompleteTimings,
 })();
+/* eslint-enable */
 
 isShell = client.getState().platform.shell;
 client.dispatch(platformActions.activateClient());
