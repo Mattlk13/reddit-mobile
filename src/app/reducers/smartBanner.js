@@ -11,6 +11,7 @@ export const DEFAULT = {
   xPromoShownUrl: null,
   loginRequired: false,
   scrolledPast: false,
+  scrolledStart: false,
 };
 
 export default function(state=DEFAULT, action={}) {
@@ -30,6 +31,12 @@ export default function(state=DEFAULT, action={}) {
       return merge(state, {
         haveShownXPromo: true,
         xPromoShownUrl: action.url,
+      });
+    }
+
+    case xpromoActions.PROMO_SCROLLSTART: {
+      return merge(state, {
+        scrolledStart: true,
       });
     }
 

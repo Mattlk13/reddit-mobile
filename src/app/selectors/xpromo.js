@@ -144,6 +144,10 @@ export function scrollPastState(state) {
   return state.smartBanner.scrolledPast;
 }
 
+export function scrollStartState(state) {
+  return state.smartBanner.scrolledStart;
+}
+
 export function shouldShowXPromo(state) {
   return state.smartBanner.showBanner &&
     xpromoIsEnabledOnPage(state) &&

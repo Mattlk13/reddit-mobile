@@ -15,6 +15,8 @@ export const hide = () => ({ type: HIDE });
 export const PROMO_CLICKED = 'XPROMO__PROMO_CLICKED';
 export const promoClicked = () => ({ type: PROMO_CLICKED });
 
+export const PROMO_SCROLLSTART = 'XPROMO__SCROLLSTART';
+export const promoScrollStart = () => ({ type: PROMO_SCROLLSTART });
 export const PROMO_SCROLLPAST = 'XPROMO__SCROLLPAST';
 export const promoScrollPast = () => ({ type: PROMO_SCROLLPAST });
 export const PROMO_SCROLLUP = 'XPROMO__SCROLLUP';

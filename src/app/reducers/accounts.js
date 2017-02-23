@@ -12,7 +12,7 @@ const INIT_ACTION = '@@INIT';
 export default (platformInitialCurrentPage={}) => {
   let FAKE_EXPERIMENT_ID = 9999;
 
-  let experimentOverrides = Object
+  const experimentOverrides = Object
     .keys(platformInitialCurrentPage.queryParams || {})
     .reduce((result, queryParam) => {
       if (queryParam.match(EXPERIMENT_REGEXP)) {
@@ -26,7 +26,7 @@ export default (platformInitialCurrentPage={}) => {
       return result;
     }, {});
 
-  console.log('overrides', experimentOverrides);
+  // console.log('overrides', experimentOverrides);
 
   const applyExperimentOverrides = state => (Object
     .keys(state)
