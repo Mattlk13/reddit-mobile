@@ -54,8 +54,8 @@ import visitedPosts from './visitedPosts';
 import wikiRequests from './wikiRequests';
 import wikis from './wikis';
 
-export default {
-  accounts,
+export default (platformInitialCurrentPage={}) => ({
+  accounts: accounts(platformInitialCurrentPage),
   accountRequests,
   activitiesRequests,
   adRequests,
@@ -109,4 +109,4 @@ export default {
   widgets,
   wikis,
   wikiRequests,
-};
+});

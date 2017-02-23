@@ -97,7 +97,7 @@ window.onunhandledrejection = rejection => {
 // start the app now
 const client = Client({
   routes,
-  reducers,
+  reducers: reducers(___r.platform.currentPage),
   reduxMiddleware: [ravenMiddleware(Raven)].concat(reduxMiddleware),
   modifyData: data => {
     // TODO if we start not using shell rendering in a serious way,
