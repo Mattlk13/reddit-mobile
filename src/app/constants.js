@@ -108,8 +108,8 @@ export const flags = {
 };
 
 export const xpromoDisplayTheme = {
-  USUAL: 'usual',
-  MINIMAL: 'minimal',
+  USUAL: 'transparent',
+  MINIMAL: 'black_banner_fixed_bottom',
 };
 
 export const themes = {

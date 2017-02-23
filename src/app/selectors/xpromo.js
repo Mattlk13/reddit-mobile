@@ -157,8 +157,10 @@ export function shouldShowXPromo(state) {
 export function interstitialType(state) {
   if (loginRequiredEnabled(state)) {
     return 'require_login';
+  } else if (xpromoThemeIsUsual(state)) {
+    return 'transparent';
   }
-  return 'transparent';
+  return 'black_banner_fixed_bottom';
 }
 
 export function isPartOfXPromoExperiment(state) {
