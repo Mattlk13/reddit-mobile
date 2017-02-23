@@ -7,7 +7,7 @@ import Account from 'apiClient/models/Account';
 const DEFAULT = {};
 
 const EXPERIMENT_REGEXP = /^experiment_/;
-const INIT_ACTION = '@@INIT';
+const INIT_ACTION = '@@redux/INIT';
 
 export default (platformInitialCurrentPage={}) => {
   let FAKE_EXPERIMENT_ID = 9999;
