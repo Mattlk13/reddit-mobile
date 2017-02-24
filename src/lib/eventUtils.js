@@ -115,47 +115,38 @@ function trackScreenViewEvent(state, additionalEventData) {
 }
 
 export function trackXPromoEvent(state, eventType, additionalEventData) {
-  let experimentPayload = {};
-  if (isPartOfXPromoExperiment(state) && currentXPromoExperimentData(state)) {
-    const { experiment_name } = currentXPromoExperimentData(state);
-    experimentPayload = { experiment_name };
-  }
   const payload = {
     ...getBasePayload(state),
     ...buildSubredditData(state),
-    ...experimentPayload,
+    ...getExperimentPayload(state),
     ...additionalEventData,
   };
   getEventTracker().track('xpromo_events', eventType, payload);
 }
 
-export function trackXPromoInit(state, additionalEventData) {
-  trackXPromoEvent(
-    state,
-    XPROMO_VIEW,
-    mergeAdditionalData(state, additionalEventData),
-  );
+function getExperimentPayload(state) {
+  let experimentPayload = {};
+  if (isPartOfXPromoExperiment(state) && currentXPromoExperimentData(state)) {
+    const { experiment_name, variant } = currentXPromoExperimentData(state);
+    experimentPayload = { experiment_name, experiment_variant: variant };
+  }
+  return experimentPayload;
 }
 
-function mergeAdditionalData(state, additionalEventData) {
-  const additionalData = { ...additionalEventData };
+export function trackXPromoInit(state, additionalEventData) {
+  const additionalData = {
+    ...additionalEventData,
+    ...getXPromoDisplayState(state),
+  };
+  trackXPromoEvent(state, XPROMO_VIEW, additionalData);
+}
 
-  // add display information 
+function getXPromoDisplayState(state) {
   const ineligibilityReason = shouldNotShowBanner();
   if (ineligibilityReason) {
-    additionalData.ineligibility_reason = ineligibilityReason;
-  } else {
-    additionalData.interstitial_type = interstitialType(state);
+    return { ineligibility_reason : ineligibilityReason };
   }
-
-  // add experiment params (if exist)
-  const experimentData = currentXPromoExperimentData(state);
-  if (experimentData) {
-    const { variant, experiment_id } = experimentData;
-    additionalData.experiment_id = experiment_id;
-    additionalData.experiment_name = variant;
-  }
-  return additionalData;
+  return { interstitial_type : interstitialType(state) };
 }
 
 export function trackExperimentClickEvent(state, experimentName, experimentId, targetThing) {
