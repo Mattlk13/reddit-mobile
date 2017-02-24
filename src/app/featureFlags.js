@@ -32,8 +32,8 @@ const {
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID,
   VARIANT_XPROMO_LOGIN_REQUIRED_IOS_CONTROL,
   VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL,
-  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT,
-  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS,
+  VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID,
   VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL,
   VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL,
 
@@ -183,16 +183,16 @@ const config = {
   },
   [VARIANT_XPROMO_LOGIN_REQUIRED_ANDROID_CONTROL]: {
     and: [
+      { allowedDevices: [ANDROID] },
       { allowNSFW: false },
       { allowedPages: ['index', 'listing'] },
-      { allowedDevices: [ANDROID] },
       { or: [
         { variant: 'mweb_xpromo_require_login_android:control_1' },
         { variant: 'mweb_xpromo_require_login_android:control_2' },
       ] },
     ],
   },
-  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_TREATMENT]: {
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS]: {
     and: [
       { allowedDevices: [IPHONE] },
       { allowNSFW: false },
@@ -203,7 +203,19 @@ const config = {
       ] },
     ],
   },
-  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_TREATMENT]: {
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL]: {
+    and: [
+      { allowedDevices: [IPHONE] },
+      { allowNSFW: false },
+      { allowedPages: ['comments'] },
+      { or: [
+        { url: 'xpromointerstitialcommentsioscontrol' },
+        { variant: 'mweb_xpromo_interstitial_comments_ios_control:control_1' },
+        { variant: 'mweb_xpromo_interstitial_comments_ios_control:control_2' },
+      ] },
+    ],
+  },
+  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID]: {
     and: [
       { allowedDevices: [ANDROID] },
       { allowNSFW: false },
@@ -214,18 +226,6 @@ const config = {
       ] },
     ],
   },
-  [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_IOS_CONTROL]: {
-    and: [
-      { allowedDevices: [IPHONE] },
-      { allowNSFW: false },
-      { allowedPages: ['comments'] },
-      { or: [
-        { url: 'xpromointerstitialcommentsioscontrol' },
-        { variant: 'mweb_xpromo_interstitial_comments_ios:control_1' },
-        { variant: 'mweb_xpromo_interstitial_comments_ios:control_2' },
-      ] },
-    ],
-  },
   [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL]: {
     and: [
       { allowedDevices: [ANDROID] },
@@ -233,8 +233,8 @@ const config = {
       { allowedPages: ['comments'] },
       { or: [
         { url: 'xpromointerstitialcommentsandroidcontrol' },
-        { variant: 'mweb_xpromo_interstitial_comments_android:control_1' },
-        { variant: 'mweb_xpromo_interstitial_comments_android:control_2' },
+        { variant: 'mweb_xpromo_interstitial_comments_android_control:control_1' },
+        { variant: 'mweb_xpromo_interstitial_comments_android_control:control_2' },
       ] },
     ],
   },

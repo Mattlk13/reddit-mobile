@@ -48,7 +48,7 @@ class XPromoWrapper extends React.Component {
     // remove scroll events for usual xpromo theme 
     // (no needs to listen window up scrolling)
     if (xpromoThemeIsUsual && alreadyScrolledPast) {
-      window.removeEventListener('scroll', this.onScroll);
+      this.toggleOnScroll(false);
     }
   }
 
@@ -56,11 +56,19 @@ class XPromoWrapper extends React.Component {
     // Indicate that we've displayed a crosspromotional UI, 
     // so we don't keep showing them during this browsing session.
     this.props.recordXPromoShown();
-    window.addEventListener('scroll', this.onScroll);
+    this.toggleOnScroll(true);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
+    this.toggleOnScroll(false);
+  }
+
+  toggleOnScroll(state) {
+    if (state) {
+      window.addEventListener('scroll', this.onScroll);
+    } else {
+      window.removeEventListener('scroll', this.onScroll);
+    }
   }
 
   render() {

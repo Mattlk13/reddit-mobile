@@ -117,8 +117,8 @@ function trackScreenViewEvent(state, additionalEventData) {
 export function trackXPromoEvent(state, eventType, additionalEventData) {
   let experimentPayload = {};
   if (isPartOfXPromoExperiment(state) && currentXPromoExperimentData(state)) {
-    const { experiment_name, variant } = currentXPromoExperimentData(state);
-    experimentPayload = { experiment_name, experiment_variant: variant };
+    const { experiment_name } = currentXPromoExperimentData(state);
+    experimentPayload = { experiment_name };
   }
   const payload = {
     ...getBasePayload(state),
@@ -130,20 +130,32 @@ export function trackXPromoEvent(state, eventType, additionalEventData) {
 }
 
 export function trackXPromoInit(state, additionalEventData) {
+  trackXPromoEvent(
+    state,
+    XPROMO_VIEW,
+    mergeAdditionalData(state, additionalEventData),
+  );
+}
+
+function mergeAdditionalData(state, additionalEventData) {
+  const additionalData = { ...additionalEventData };
+
+  // add display information 
   const ineligibilityReason = shouldNotShowBanner();
   if (ineligibilityReason) {
-    trackXPromoEvent(
-      state,
-      XPROMO_INELIGIBLE,
-      { ...additionalEventData, ineligibility_reason: ineligibilityReason },
-    );
+    additionalData.ineligibility_reason = ineligibilityReason;
   } else {
-    trackXPromoEvent(
-      state,
-      XPROMO_VIEW,
-      { ...additionalEventData, interstitial_type: interstitialType(state) },
-    );
+    additionalData.interstitial_type = interstitialType(state);
   }
+
+  // add experiment params (if exist)
+  const experimentData = currentXPromoExperimentData(state);
+  if (experimentData) {
+    const { variant, experiment_id } = experimentData;
+    additionalData.experiment_id = experiment_id;
+    additionalData.experiment_name = variant;
+  }
+  return additionalData;
 }
 
 export function trackExperimentClickEvent(state, experimentName, experimentId, targetThing) {
