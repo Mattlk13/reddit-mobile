@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import * as xpromoActions from 'app/actions/xpromo';
 import { XPROMO_SCROLLPAST, XPROMO_SCROLLUP } from 'lib/eventUtils';
-import { xpromoThemeIsUsual, scrollPastState, scrollStartState} from 'app/selectors/xpromo';
+import { xpromoThemeIsUsual, scrollPastState, scrollStartState } from 'app/selectors/xpromo';
 const T = React.PropTypes;
 
 class XPromoWrapper extends React.Component {

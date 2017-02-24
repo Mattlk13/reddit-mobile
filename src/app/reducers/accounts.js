@@ -8,6 +8,7 @@ const DEFAULT = {};
 
 const EXPERIMENT_REGEXP = /^experiment_/;
 const INIT_ACTION = '@@redux/INIT';
+const DEV_TOOLS_INIT = '@@INIT';
 
 export default (platformInitialCurrentPage={}) => {
   let FAKE_EXPERIMENT_ID = 9999;
@@ -57,6 +58,7 @@ export default (platformInitialCurrentPage={}) => {
 
       // on client bootstrap, we need to overrdie whatever came in from the server
       // accounts come in as JSON, so we need to deserialize them
+      case DEV_TOOLS_INIT:
       case INIT_ACTION: {
         return applyExperimentOverrides(activateModels(state));
       }

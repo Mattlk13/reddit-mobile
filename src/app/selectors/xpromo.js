@@ -1,8 +1,7 @@
 import { find, some } from 'lodash';
 
 import { flags as flagConstants, themes, xpromoDisplayTheme } from 'app/constants';
-import features from 'app/featureFlags';
-import getSubreddit from 'lib/getSubredditFromState';
+import features, { isNSFWPage } from 'app/featureFlags';
 import getRouteMetaFromState from 'lib/getRouteMetaFromState';
 import { getExperimentData } from 'lib/experiments';
 import { getDevice, IPHONE, ANDROID } from 'lib/getDeviceFromState';
@@ -55,21 +54,6 @@ function getRouteActionName(state) {
   return actionName;
 }
 
-function isNSFWPage(state) {
-  const { subreddits } = state;
-  const subredditName = getSubreddit(state);
-
-  if (!subredditName) {
-    return true;
-  }
-
-  const subredditInfo = subreddits[subredditName.toLowerCase()];
-  if (subredditInfo) {
-    return subredditInfo.over18;
-  }
-  return true;
-}
-
 function isDayMode(state) {
   return (DAYMODE === state.theme);
 }
@@ -111,12 +95,12 @@ export function xpromoIsPastExperiment(state) {
   }
 }
 
-// @TODO: this should be controlled 
+// @TODO: this should be controlled
 // by FeatureFlags.js config only
 export function xpromoIsEnabledOnPage(state) {
   const actionName = getRouteActionName(state);
   return actionName === 'index' 
-    || (actionName === 'comments' && isDayMode(state)) 
+    || (actionName === 'comments' && isDayMode(state) && !isNSFWPage(state))
     || (actionName === 'listing' && !isNSFWPage(state));
 }
 
@@ -134,7 +118,7 @@ export function loginRequiredEnabled(state) {
     return featureContext.enabled(feature);
   });
   return (
-    shouldShowXPromo(state) && 
+    shouldShowXPromo(state) &&
     state.user.loggedOut &&
     isExperimentEnabled
   );
@@ -151,7 +135,7 @@ export function scrollStartState(state) {
 export function shouldShowXPromo(state) {
   return state.smartBanner.showBanner &&
     xpromoIsEnabledOnPage(state) &&
-    xpromoIsEnabledOnDevice(state); 
+    xpromoIsEnabledOnDevice(state);
 }
 
 export function interstitialType(state) {
