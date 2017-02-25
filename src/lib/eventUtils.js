@@ -14,6 +14,13 @@ import {
   isEligibleCommentsPage,
 } from 'app/selectors/xpromo';
 
+import {
+  buildAdditionalEventData as listingPageEventData,
+} from 'app/router/handlers/PostsFromSubreddit';
+import {
+  buildAdditionalEventData as commentsPageEventData,
+} from 'app/router/handlers/CommentsPage';
+
 import { isHidden } from 'lib/dom';
 import isFakeSubreddit from 'lib/isFakeSubreddit';
 import { getEventTracker } from 'lib/eventTracker';
@@ -117,13 +124,28 @@ function trackScreenViewEvent(state, additionalEventData) {
   getEventTracker().track('screenview_events', 'cs.screenview_mweb', payload);
 }
 
+export function xPromoExtraScreenViewData(state) {
+  // ensure that we get all of the extra screen view events data that's
+  // present on comments and listings pages
+  let extraPageData = {};
+  if (isEligibleListingPage(state)) {
+    extraPageData = listingPageEventData(state);
+  } else if (isEligibleCommentsPage(state)) {
+    extraPageData = commentsPageEventData(state);
+  }
+
+  return extraPageData;
+}
+
 export function trackXPromoEvent(state, eventType, additionalEventData) {
   const payload = {
     ...getBasePayload(state),
     ...buildSubredditData(state),
     ...getExperimentPayload(state),
+    ...xPromoExtraScreenViewData(state),
     ...additionalEventData,
   };
+
   getEventTracker().track('xpromo_events', eventType, payload);
 }
 

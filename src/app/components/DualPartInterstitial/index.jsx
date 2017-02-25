@@ -8,7 +8,11 @@ import { getDevice } from 'lib/getDeviceFromState';
 import DualPartInterstitialHeader from 'app/components/DualPartInterstitial/Header';
 import DualPartInterstitialFooter from 'app/components/DualPartInterstitial/Footer';
 import XPromoWrapper from 'app/components/XPromoWrapper';
-import { navigateToAppStore, promoClicked } from 'app/actions/xpromo';
+import {
+  logAppStoreNavigation,
+  navigateToAppStore,
+  promoClicked,
+} from 'app/actions/xpromo';
 import { xpromoThemeIsUsual, scrollPastState } from 'app/selectors/xpromo';
 
 export function DualPartInterstitial(props) {
@@ -48,9 +52,10 @@ export const selector = createSelector(
 );
 
 const mapDispatchToProps = dispatch => ({
-  navigator: (url) => (() => {
+  navigator: url => (() => {
+    dispatch(logAppStoreNavigation('interstitial_button'));
     dispatch(promoClicked());
-    dispatch(navigateToAppStore(url, 'interstitial_button'));
+    dispatch(navigateToAppStore(url));
   }),
 });
 
