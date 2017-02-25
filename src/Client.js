@@ -95,10 +95,9 @@ window.onunhandledrejection = rejection => {
 };
 
 // start the app now
-/* eslint-disable no-undef*/
 const client = Client({
   routes,
-  reducers: reducers(___r.platform.currentPage),
+  reducers,
   reduxMiddleware: [ravenMiddleware(Raven)].concat(reduxMiddleware),
   modifyData: data => {
     // TODO if we start not using shell rendering in a serious way,
@@ -157,7 +156,6 @@ const client = Client({
   debug: (process.env.NODE_ENV || 'production') !== 'production',
   onHandlerComplete: onHandlerCompleteTimings,
 })();
-/* eslint-enable */
 
 isShell = client.getState().platform.shell;
 client.dispatch(platformActions.activateClient());

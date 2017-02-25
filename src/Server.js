@@ -95,7 +95,7 @@ export function startServer() {
     port: config.port,
     routes,
     template: main,
-    reducers: reducers(),
+    reducers,
     reduxMiddleware: [ravenMiddleware(Raven)].concat(reduxMiddleware),
     dispatchBeforeNavigation: async (ctx, dispatch, getState) => {
       dispatchInitialShell(ctx, dispatch);
