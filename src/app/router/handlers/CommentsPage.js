@@ -151,7 +151,7 @@ const fetchRecommendedSubredditsToPostsByPost = (state, dispatch, post) => {
   dispatch(subredditsToPostsByPostActions.fetchSubredditsToPostsByPost(post, sort, time, experimentId));
 };
 
-function buildAdditionalEventData(state) {
+export function buildAdditionalEventData(state) {
   const { currentPage: { queryParams, urlParams } } = state.platform;
   const fullName =`t3_${urlParams.postId}`;
   const post = state.posts[fullName];
