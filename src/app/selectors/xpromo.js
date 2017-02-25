@@ -48,7 +48,7 @@ const EXPERIMENT_NAMES = {
   [VARIANT_XPROMO_INTERSTITIAL_COMMENTS_ANDROID_CONTROL]: 'mweb_xpromo_interstitial_comments_android',
 };
 
-function getRouteActionName(state) {
+export function getRouteActionName(state) {
   const routeMeta = getRouteMetaFromState(state);
   const actionName = routeMeta && routeMeta.name;
   return actionName;
@@ -98,10 +98,18 @@ export function xpromoIsPastExperiment(state) {
 // @TODO: this should be controlled
 // by FeatureFlags.js config only
 export function xpromoIsEnabledOnPage(state) {
+  return isEligibleListingPage(state) || isEligibleCommentsPage(state);
+}
+
+export function isEligibleListingPage(state) {
   const actionName = getRouteActionName(state);
-  return actionName === 'index' 
-    || (actionName === 'comments' && isDayMode(state) && !isNSFWPage(state))
+  return actionName === 'index'
     || (actionName === 'listing' && !isNSFWPage(state));
+}
+
+export function isEligibleCommentsPage(state) {
+  const actionName = getRouteActionName(state);
+  return actionName === 'comments' && isDayMode(state) && !isNSFWPage(state);
 }
 
 export function xpromoIsEnabledOnDevice(state) {
@@ -113,15 +121,13 @@ export function xpromoIsEnabledOnDevice(state) {
 }
 
 export function loginRequiredEnabled(state) {
+  if (!(shouldShowXPromo(state) && state.user.loggedOut)) {
+    return false;
+  }
   const featureContext = features.withContext({ state });
-  const isExperimentEnabled = some(EXPERIMENT_MOBILE, feature => {
+  return some(EXPERIMENT_MOBILE, feature => {
     return featureContext.enabled(feature);
   });
-  return (
-    shouldShowXPromo(state) &&
-    state.user.loggedOut &&
-    isExperimentEnabled
-  );
 }
 
 export function scrollPastState(state) {
@@ -154,4 +160,8 @@ export function isPartOfXPromoExperiment(state) {
 export function currentExperimentData(state) {
   const experimentName = loginExperimentName(state);
   return getExperimentData(state, experimentName);
+}
+
+export function XPromoIsActive(state) {
+  return shouldShowXPromo(state) && xpromoIsPastExperiment(state);
 }
