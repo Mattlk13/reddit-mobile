@@ -30,14 +30,14 @@ const reddit = process.env.REDDIT || 'https://www.reddit.com';
 // NOTE: It's very important that this is the root domain and not any
 // subdomain. Used for setting cookies, could cause issues like
 // losing authentication or infinite redirect loops if it doesn't work.
-const redditDomainParts = reddit
-  .match(/^https?:\/\/([^\/]+)/)[1]
-  .split('.');
+// const redditDomainParts = reddit
+//   .match(/^https?:\/\/([^\/]+)/)[1]
+//   .split('.');
 
-// Get the last two parts if the domain has multiple subdmaoins
-const rootReddit = redditDomainParts.length < 2
-  ? redditDomainParts.join('.')
-  : redditDomainParts.splice(redditDomainParts.length - 2, 2).join('.');
+// // Get the last two parts if the domain has multiple subdmaoins
+// const rootReddit = redditDomainParts.length < 2
+//   ? redditDomainParts.join('.')
+//   : redditDomainParts.splice(redditDomainParts.length - 2, 2).join('.');
 
 const config = () => ({
   https: process.env.HTTPS === 'true',
@@ -61,7 +61,7 @@ const config = () => ({
   authAPIOrigin: process.env.AUTH_API_ORIGIN || 'https://oauth.reddit.com',
 
   reddit,
-  rootReddit,
+  rootReddit: '.snooguts.net',
 
   amp: process.env.AMP,
 
