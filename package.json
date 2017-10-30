@@ -17,7 +17,9 @@
     "lint-fixup": "eslint src --ext .js,.jsx --fix",
     "fonts": "webfonts",
     "test": "blueprints -t",
-    "test:watch": "npm run test -- -w"
+    "test:watch": "npm run test -- -w",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@r/build": "~0.14.0",
@@ -51,7 +53,8 @@
     "reselect": "2.5.1",
     "source-map-support": "^0.4.0",
     "statsd-client": "^0.2.2",
-    "superagent": "1.8.3"
+    "superagent": "3.7.0",
+    "snyk": "^1.47.0"
   },
   "devDependencies": {
     "babel-core": "^6.8.0",
@@ -63,5 +66,6 @@
     "mocha": "2.4.5",
     "sinon-chai": "2.8.0",
     "webpack-bundle-analyzer": "^2.2.1"
-  }
+  },
+  "snyk": true
 }
