@@ -1,0 +1,10 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.12.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:minimatch:20160620':
+    - '@r/platform > mocha > glob > minimatch':
+        patched: '2018-10-29T22:29:33.410Z'
+    - '@r/platform > chai-enzyme > html > glob > minimatch':
+        patched: '2018-10-29T22:29:33.410Z'
