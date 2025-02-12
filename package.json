@@ -30,15 +30,15 @@
     "autoprefixer": "6.3.6",
     "babel-polyfill": "^6.7.4",
     "cluster": "^0.7.7",
-    "crypto-js": "3.1.8",
+    "crypto-js": "4.2.0",
     "event-tracker": "git://github.com/reddit/event-tracker.git#28bc2dd9ce3b80540fdf189e1b003f8264cd0d08",
     "js-cookie": "^2.1.1",
     "json-stable-stringify": "^1.0.1",
-    "koa": "2.0.0",
+    "koa": "2.15.4",
     "koa-bodyparser": "3.0.0",
     "koa-router": "7.0.1",
     "koa-static": "3.0.0",
-    "lodash": "4.12.0",
+    "lodash": "4.17.21",
     "nodemon": "^1.9.1",
     "raf": "^3.2.0",
     "raven": "^1.1.1",
@@ -51,7 +51,7 @@
     "reselect": "2.5.1",
     "source-map-support": "^0.4.0",
     "statsd-client": "^0.2.2",
-    "superagent": "1.8.3"
+    "superagent": "9.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.8.0",
@@ -62,6 +62,6 @@
     "eslint-plugin-react": "^5.1.1",
     "mocha": "2.4.5",
     "sinon-chai": "2.8.0",
-    "webpack-bundle-analyzer": "^2.2.1"
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }
